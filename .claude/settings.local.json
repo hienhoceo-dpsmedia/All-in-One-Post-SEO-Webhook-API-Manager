@@ -14,7 +14,8 @@
       "Bash(gh release create:*)",
       "Bash(php:*)",
       "Bash(curl:*)",
-      "Bash(gh release upload:*)"
+      "Bash(gh release upload:*)",
+      "Bash(zip:*)"
     ],
     "deny": [],
     "ask": []

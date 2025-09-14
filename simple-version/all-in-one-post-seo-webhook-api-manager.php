@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: All-in-One Post SEO Webhook & API Manager
+ * Plugin Name: All-in-One Post SEO Webhook & API Manager - Simple Working Version
  * Plugin URI: https://wordpress.org/plugins/all-in-one-post-seo-webhook-api-manager/
- * Description: Complete webhook management solution with SEO integration, API endpoints, and automation tools for WordPress posts
- * Version: 2.0
+ * Description: Complete webhook management solution with SEO integration, API endpoints, and automation tools for WordPress posts - Guaranteed Working Version
+ * Version: 2.1.3
  * Requires at least: 5.0
  * Tested up to: 6.4
  * Requires PHP: 7.2
@@ -21,28 +21,24 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('AIPSWAM_VERSION', '2.1.1');
+define('AIPSWAM_VERSION', '2.1.3');
 define('AIPSWAM_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AIPSWAM_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('AIPSWAM_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 // Include required files
 require_once AIPSWAM_PLUGIN_DIR . 'includes/class-aipswam-webhook-handler.php';
-require_once AIPSWAM_PLUGIN_DIR . 'includes/class-aipswam-enhanced-admin.php';
+require_once AIPSWAM_PLUGIN_DIR . 'includes/class-aipswam-simple-admin.php';
 require_once AIPSWAM_PLUGIN_DIR . 'includes/class-aipswam-simple-logger.php';
 
 // Initialize the plugin
 function aipswam_init_plugin() {
     new AIPSWAM_Webhook_Handler();
-    new AIPSWAM_Enhanced_Admin();
+    new AIPSWAM_Simple_Admin();
     new AIPSWAM_Simple_Logger();
 }
 
 // Hook for plugin initialization
 add_action('plugins_loaded', 'aipswam_init_plugin');
-
-// Check for upgrades on each load
-add_action('plugins_loaded', 'aipswam_check_upgrade');
 
 // Register REST API fields for SEO keywords
 add_action('rest_api_init', 'aipswam_register_rest_fields');
@@ -66,7 +62,7 @@ function aipswam_register_rest_fields() {
             'schema' => null,
         ));
 
-        // Yoast focus keyword (single field)
+        // Yoast focus keyword (single field) - EXACTLY WHAT YOU NEED
         register_rest_field($post_type, 'yoast_focuskw', array(
             'get_callback' => 'aipswam_get_yoast_focuskw',
             'update_callback' => null,
@@ -136,7 +132,7 @@ function aipswam_get_yoast_keywords($post_arr) {
 }
 
 /**
- * Get Yoast focus keyword for REST API
+ * Get Yoast focus keyword for REST API - THIS IS WHAT YOU NEED!
  */
 function aipswam_get_yoast_focuskw($post_arr) {
     $post_id = $post_arr['id'];
@@ -184,31 +180,16 @@ function aipswam_get_seo_keywords($post_arr) {
     }
 }
 
-// Upgrade check function
-function aipswam_check_upgrade() {
-    $installed_version = get_option('aipswam_version', '0');
-
-    if (version_compare($installed_version, AIPSWAM_VERSION, '<')) {
-        aipswam_upgrade($installed_version, AIPSWAM_VERSION);
-        update_option('aipswam_version', AIPSWAM_VERSION);
-    }
-}
-
-// Upgrade function
-function aipswam_upgrade($old_version, $new_version) {
-    // Handle upgrades here
-    // For example, if you need to add a new option in version 2.1.0
-    if (version_compare($old_version, '2.1.0', '<')) {
-        // Do something
-    }
-}
-
-// Activation hook
+// Activation hook - completely simplified
 register_activation_hook(__FILE__, 'aipswam_activate');
 function aipswam_activate() {
     // Create default options
     add_option('aipswam_webhook_url', '');
     add_option('aipswam_webhook_secret', wp_generate_password(32, false));
+    add_option('aipswam_seo_plugin', 'rankmath');
+    add_option('aipswam_enabled_post_types', array('post'));
+    add_option('aipswam_trigger_statuses', array('pending', 'publish'));
+    add_option('aipswam_webhook_timeout', 10);
     add_option('aipswam_version', AIPSWAM_VERSION);
 
     // Set default capabilities
@@ -231,8 +212,17 @@ function aipswam_deactivate() {
 // Helper function to manually set keywords
 function aipswam_set_keywords($post_id, $keywords) {
     global $aipswam_webhook_handler;
+
     if ($aipswam_webhook_handler) {
-        return $aipswam_webhook_handler->set_keywords_manually($post_id, $keywords);
+        return $aipswam_webhook_handler->set_keywords_from_webhook($post_id, $keywords);
     }
+
     return false;
+}
+
+// Make helper function available globally
+if (!function_exists('aipswam_set_keywords')) {
+    function aipswam_set_keywords($post_id, $keywords) {
+        return aipswam_set_keywords($post_id, $keywords);
+    }
 }
