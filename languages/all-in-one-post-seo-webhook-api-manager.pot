@@ -1,0 +1,258 @@
+# Copyright (C) 2024 DPS.MEDIA JSC
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: All-in-One Post SEO Webhook & API Manager 2.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/all-in-one-post-seo-webhook-api-manager\n"
+"POT-Creation-Date: 2024-01-01T00:00:00+00:00\n"
+"PO-Revision-Date: 2024-01-01T00:00:00+00:00\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Domain: all-in-one-post-seo-webhook-api-manager\n"
+
+#. Plugin Name of the plugin
+msgid "All-in-One Post SEO Webhook & API Manager"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://wordpress.org/plugins/all-in-one-post-seo-webhook-api-manager/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Complete webhook management solution with SEO integration, API endpoints, and automation tools for WordPress posts"
+msgstr ""
+
+#. Author of the plugin
+msgid "DPS.MEDIA JSC"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://dps.media/"
+msgstr ""
+
+#: complete-webhook-plugin.php:154
+msgid "Warning: RankMath plugin is not active. The keyword setting feature will not work."
+msgstr ""
+
+#: complete-webhook-plugin.php:203
+msgid "Webhook & SEO Integration Settings"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:28
+msgid "SEO Webhook API"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:137
+msgid "All-in-One Post SEO Webhook & API Manager"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:147
+#: includes/class-aipswam-admin.php:148
+msgid "General"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:149
+#: includes/class-aipswam-admin.php:192
+msgid "Triggers"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:150
+#: includes/class-aipswam-admin.php:235
+msgid "SEO Integration"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:151
+#: includes/class-aipswam-admin.php:266
+msgid "Advanced"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:152
+#: includes/class-aipswam-admin.php:313
+msgid "Tools"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:161
+msgid "Webhook URL"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:168
+msgid "Enter the webhook URL where posts will be sent"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:173
+msgid "Webhook Secret"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:180
+msgid "Optional: Secret key for webhook authentication"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:197
+msgid "Enabled Post Types"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:206
+msgid "Select which post types should trigger webhooks"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:213
+msgid "Trigger Statuses"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:222
+msgid "Select which post status changes should trigger webhooks"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:240
+msgid "SEO Plugin"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:246
+msgid "RankMath SEO"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:249
+msgid "Yoast SEO"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:252
+msgid "Both (Priority: RankMath)"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:255
+msgid "Choose which SEO plugin to use for keyword integration"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:272
+msgid "Webhook Timeout"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:279
+msgid "Timeout in seconds for webhook requests (1-30)"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:285
+msgid "Enable Manual Trigger"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:290
+msgid "Enable manual webhook trigger interface"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:296
+msgid "Enable REST API"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:301
+msgid "Enable REST API endpoints for keyword retrieval"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:314
+msgid "Webhook Testing"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:315
+msgid "Test Webhook Connection"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:319
+msgid "Manual Webhook Trigger"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:322
+msgid "Select a post..."
+msgstr ""
+
+#: includes/class-aipswam-admin.php:325
+msgid "Send Webhook"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:330
+msgid "API Endpoints"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:331
+msgid "Webhook Processing Endpoint"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:338
+msgid "REST API Endpoints"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:339
+msgid "Available endpoints:"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:343
+msgid "Get keywords for a post"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:344
+msgid "Trigger webhook for a post"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:345
+msgid "Get webhook logs"
+msgstr ""
+
+#: includes/class-aipswam-admin.php:345
+msgid "REST API endpoints are disabled. Enable them in Advanced settings."
+msgstr ""
+
+#: includes/class-aipswam-webhook-handler.php:203
+#: includes/class-aipswam-webhook-handler.php:260
+msgid "Unauthorized"
+msgstr ""
+
+#: includes/class-aipswam-webhook-handler.php:206
+#: includes/class-aipswam-webhook-handler.php:265
+msgid "No SEO plugin is active"
+msgstr ""
+
+#: includes/class-aipswam-webhook-handler.php:212
+#: includes/class-aipswam-webhook-handler.php:267
+msgid "No input data provided"
+msgstr ""
+
+#: includes/class-aipswam-webhook-handler.php:259
+#: includes/class-aipswam-webhook-handler.php:764
+msgid "Keywords set successfully"
+msgstr ""
+
+#: includes/class-aipswam-webhook-handler.php:268
+msgid "Failed to set keywords"
+msgstr ""
+
+#: includes/class-aipswam-webhook-handler.php:765
+msgid "Webhook connection successful"
+msgstr ""
+
+#: includes/class-aipswam-webhook-handler.php:791
+msgid "Webhook triggered successfully"
+msgstr ""
+
+#: includes/class-aipswam-webhook-handler.php:795
+msgid "Failed to trigger webhook"
+msgstr ""
+
+#: assets/js/admin.js:101
+msgid "Select a post..."
+msgstr ""
+
+#: includes/class-aipswam-webhook-handler.php:729
+#: includes/class-aipswam-webhook-handler.php:776
+msgid "Permission denied"
+msgstr ""
+
+#: includes/class-aipswam-webhook-handler.php:734
+msgid "Webhook URL not configured"
+msgstr ""
+
+#: includes/class-aipswam-webhook-handler.php:783
+msgid "Post not found"
+msgstr ""
