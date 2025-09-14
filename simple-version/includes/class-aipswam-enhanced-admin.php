@@ -80,7 +80,7 @@ class AIPSWAM_Enhanced_Admin {
     public function enqueue_admin_assets($hook) {
         if ($hook === 'settings_page_aipswam-settings') {
             wp_enqueue_style('aipswam-admin', AIPSWAM_PLUGIN_URL . 'assets/css/admin.css', array(), AIPSWAM_VERSION);
-            wp_enqueue_script('aipswam-admin', AIPSWAM_PLUGIN_URL . 'assets/js/admin.js', array('jquery'), AIPSWAM_VERSION, true);
+            wp_enqueue_script('jquery');
         }
     }
 
@@ -555,7 +555,44 @@ class AIPSWAM_Enhanced_Admin {
                 </div>
             </div>
 
-            
+            <script type="text/javascript">
+                (function($) {
+                    $(document).ready(function() {
+                        console.log('AIPSWAM Admin JavaScript loaded');
+
+                        // Tab functionality
+                        $('.nav-tab').on('click', function(e) {
+                            e.preventDefault();
+                            console.log('Tab clicked');
+
+                            var target = $(this).data('target');
+                            console.log('Target:', target);
+
+                            $('.nav-tab').removeClass('nav-tab-active');
+                            $(this).addClass('nav-tab-active');
+
+                            $('.tab-pane').removeClass('active');
+                            $('#' + target).addClass('active');
+                        });
+
+                        // Copy to clipboard functionality
+                        $('.aipswam-copy-btn').on('click', function() {
+                            var url = $(this).data('url');
+                            if (url && navigator.clipboard) {
+                                navigator.clipboard.writeText(url).then(function() {
+                                    alert('<?php echo esc_js__('URL copied to clipboard!', 'all-in-one-post-seo-webhook-api-manager'); ?>');
+                                });
+                            }
+                        });
+
+                        // Generate secret functionality
+                        window.generateSecret = function() {
+                            var secret = Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
+                            $('#aipswam_webhook_secret').val(secret);
+                        };
+                    });
+                })(jQuery);
+            </script>
         </div>
         <?php
     }

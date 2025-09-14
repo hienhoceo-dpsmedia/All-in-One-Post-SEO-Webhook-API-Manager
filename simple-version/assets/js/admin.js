@@ -32,7 +32,7 @@
         $('.nav-tab').on('click', function(e) {
             e.preventDefault();
 
-            var target = $(this).data('target');
+            var target = $(this).attr('href');
 
             // Update active tab
             $('.nav-tab').removeClass('nav-tab-active');
@@ -40,7 +40,7 @@
 
             // Update active pane
             $('.tab-pane').removeClass('active');
-            $('#' + target).addClass('active');
+            $(target).addClass('active');
         });
 
         // Handle hash in URL
