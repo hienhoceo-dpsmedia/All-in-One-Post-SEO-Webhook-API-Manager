@@ -80,6 +80,7 @@ class AIPSWAM_Enhanced_Admin {
     public function enqueue_admin_assets($hook) {
         if ($hook === 'settings_page_aipswam-settings') {
             wp_enqueue_style('aipswam-admin', AIPSWAM_PLUGIN_URL . 'assets/css/admin.css', array(), AIPSWAM_VERSION);
+            wp_enqueue_script('jquery');
         }
     }
 
@@ -555,34 +556,42 @@ class AIPSWAM_Enhanced_Admin {
             </div>
 
             <script type="text/javascript">
-                jQuery(document).ready(function($) {
-                    // Tab functionality
-                    $('.nav-tab').on('click', function(e) {
-                        e.preventDefault();
+                (function($) {
+                    $(document).ready(function() {
+                        console.log('AIPSWAM Admin JavaScript loaded');
 
-                        var target = $(this).data('target');
+                        // Tab functionality
+                        $('.nav-tab').on('click', function(e) {
+                            e.preventDefault();
+                            console.log('Tab clicked');
 
-                        $('.nav-tab').removeClass('nav-tab-active');
-                        $(this).addClass('nav-tab-active');
+                            var target = $(this).data('target');
+                            console.log('Target:', target);
 
-                        $('.tab-pane').removeClass('active');
-                        $('#' + target).addClass('active');
-                    });
+                            $('.nav-tab').removeClass('nav-tab-active');
+                            $(this).addClass('nav-tab-active');
 
-                    // Copy to clipboard functionality
-                    $('.aipswam-copy-btn').on('click', function() {
-                        var url = $(this).data('url');
-                        navigator.clipboard.writeText(url).then(function() {
-                            alert('<?php echo esc_js__('URL copied to clipboard!', 'all-in-one-post-seo-webhook-api-manager'); ?>');
+                            $('.tab-pane').removeClass('active');
+                            $('#' + target).addClass('active');
                         });
-                    });
 
-                    // Generate secret functionality
-                    window.generateSecret = function() {
-                        var secret = Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
-                        $('#aipswam_webhook_secret').val(secret);
-                    };
-                });
+                        // Copy to clipboard functionality
+                        $('.aipswam-copy-btn').on('click', function() {
+                            var url = $(this).data('url');
+                            if (url && navigator.clipboard) {
+                                navigator.clipboard.writeText(url).then(function() {
+                                    alert('<?php echo esc_js__('URL copied to clipboard!', 'all-in-one-post-seo-webhook-api-manager'); ?>');
+                                });
+                            }
+                        });
+
+                        // Generate secret functionality
+                        window.generateSecret = function() {
+                            var secret = Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
+                            $('#aipswam_webhook_secret').val(secret);
+                        };
+                    });
+                })(jQuery);
             </script>
         </div>
         <?php
