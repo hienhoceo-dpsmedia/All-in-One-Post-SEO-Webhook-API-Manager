@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('AIPSWAM_VERSION', '2.0');
+define('AIPSWAM_VERSION', '2.1.1');
 define('AIPSWAM_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AIPSWAM_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('AIPSWAM_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -40,6 +40,9 @@ function aipswam_init_plugin() {
 
 // Hook for plugin initialization
 add_action('plugins_loaded', 'aipswam_init_plugin');
+
+// Check for upgrades on each load
+add_action('plugins_loaded', 'aipswam_check_upgrade');
 
 // Register REST API fields for SEO keywords
 add_action('rest_api_init', 'aipswam_register_rest_fields');
@@ -178,6 +181,16 @@ function aipswam_get_seo_keywords($post_arr) {
             return aipswam_get_yoast_keywords($post_arr);
         default:
             return array('primary' => '', 'secondary' => array());
+    }
+}
+
+// Upgrade check function
+function aipswam_check_upgrade() {
+    $installed_version = get_option('aipswam_version', '0');
+
+    if (version_compare($installed_version, AIPSWAM_VERSION, '<')) {
+        aipswam_activate();
+        update_option('aipswam_version', AIPSWAM_VERSION);
     }
 }
 

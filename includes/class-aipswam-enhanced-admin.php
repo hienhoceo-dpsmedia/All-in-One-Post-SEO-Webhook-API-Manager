@@ -212,23 +212,23 @@ class AIPSWAM_Enhanced_Admin {
 
             <div class="aipswam-tabs">
                 <nav class="nav-tab-wrapper">
-                    <a href="#general" class="nav-tab nav-tab-active">
+                    <a href="#general" class="nav-tab nav-tab-active" data-target="general">
                         <span class="dashicons dashicons-admin-settings"></span>
                         <?php _e('Configuration', 'all-in-one-post-seo-webhook-api-manager'); ?>
                     </a>
-                    <a href="#triggers" class="nav-tab">
+                    <a href="#triggers" class="nav-tab" data-target="triggers">
                         <span class="dashicons dashicons-update"></span>
                         <?php _e('Triggers', 'all-in-one-post-seo-webhook-api-manager'); ?>
                     </a>
-                    <a href="#api" class="nav-tab">
+                    <a href="#api" class="nav-tab" data-target="api">
                         <span class="dashicons dashicons-rest-api"></span>
                         <?php _e('API Endpoints', 'all-in-one-post-seo-webhook-api-manager'); ?>
                     </a>
-                    <a href="#keywords" class="nav-tab">
+                    <a href="#keywords" class="nav-tab" data-target="keywords">
                         <span class="dashicons dashicons-edit-page"></span>
                         <?php _e('Keyword Guide', 'all-in-one-post-seo-webhook-api-manager'); ?>
                     </a>
-                    <a href="#webhook-format" class="nav-tab">
+                    <a href="#webhook-format" class="nav-tab" data-target="webhook-format">
                         <span class="dashicons dashicons-code-standards"></span>
                         <?php _e('Webhook Format', 'all-in-one-post-seo-webhook-api-manager'); ?>
                     </a>
@@ -560,13 +560,13 @@ class AIPSWAM_Enhanced_Admin {
                     $('.nav-tab').on('click', function(e) {
                         e.preventDefault();
 
-                        var target = $(this).attr('href');
+                        var target = $(this).data('target');
 
                         $('.nav-tab').removeClass('nav-tab-active');
                         $(this).addClass('nav-tab-active');
 
                         $('.tab-pane').removeClass('active');
-                        $(target).addClass('active');
+                        $('#' + target).addClass('active');
                     });
 
                     // Copy to clipboard functionality
