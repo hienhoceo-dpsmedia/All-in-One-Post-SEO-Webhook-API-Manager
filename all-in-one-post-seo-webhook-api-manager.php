@@ -3,7 +3,7 @@
  * Plugin Name: All-in-One Post SEO Webhook & API Manager
  * Plugin URI: https://wordpress.org/plugins/all-in-one-post-seo-webhook-api-manager/
  * Description: Complete webhook management solution with SEO integration, API endpoints, and automation tools for WordPress posts
- * Version: 2.0
+ * Version: 2.2.8
  * Requires at least: 5.0
  * Tested up to: 6.4
  * Requires PHP: 7.2
@@ -21,20 +21,21 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('AIPSWAM_VERSION', '2.1.1');
+define('AIPSWAM_VERSION', '2.2.8');
 define('AIPSWAM_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AIPSWAM_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('AIPSWAM_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 // Include required files
-require_once AIPSWAM_PLUGIN_DIR . 'includes/class-aipswam-webhook-handler.php';
-require_once AIPSWAM_PLUGIN_DIR . 'includes/class-aipswam-enhanced-admin.php';
+require_once AIPSWAM_PLUGIN_DIR . 'includes/class-aipswam-secure-webhook-handler.php';
+require_once AIPSWAM_PLUGIN_DIR . 'includes/class-aipswam-working-admin.php';
 require_once AIPSWAM_PLUGIN_DIR . 'includes/class-aipswam-simple-logger.php';
+require_once AIPSWAM_PLUGIN_DIR . 'includes/simple-keyword-endpoint.php';
 
 // Initialize the plugin
 function aipswam_init_plugin() {
-    new AIPSWAM_Webhook_Handler();
-    new AIPSWAM_Enhanced_Admin();
+    new AIPSWAM_Secure_Webhook_Handler();
+    new AIPSWAM_Working_Admin();
     new AIPSWAM_Simple_Logger();
 }
 
@@ -43,6 +44,15 @@ add_action('plugins_loaded', 'aipswam_init_plugin');
 
 // Check for upgrades on each load
 add_action('plugins_loaded', 'aipswam_check_upgrade');
+
+// Force version update if needed
+add_action('init', 'aipswam_force_version_update');
+function aipswam_force_version_update() {
+    $current_version = get_option('aipswam_version', '0');
+    if ($current_version !== AIPSWAM_VERSION) {
+        update_option('aipswam_version', AIPSWAM_VERSION);
+    }
+}
 
 // Register REST API fields for SEO keywords
 add_action('rest_api_init', 'aipswam_register_rest_fields');
@@ -188,7 +198,8 @@ function aipswam_get_seo_keywords($post_arr) {
 function aipswam_check_upgrade() {
     $installed_version = get_option('aipswam_version', '0');
 
-    if (version_compare($installed_version, AIPSWAM_VERSION, '<')) {
+    // Force version update if mismatch
+    if ($installed_version !== AIPSWAM_VERSION) {
         aipswam_upgrade($installed_version, AIPSWAM_VERSION);
         update_option('aipswam_version', AIPSWAM_VERSION);
     }
@@ -209,7 +220,18 @@ function aipswam_activate() {
     // Create default options
     add_option('aipswam_webhook_url', '');
     add_option('aipswam_webhook_secret', wp_generate_password(32, false));
+    add_option('aipswam_seo_plugin', 'rankmath');
+    add_option('aipswam_enabled_post_types', array('post'));
+    add_option('aipswam_trigger_statuses', array('pending', 'publish'));
+    add_option('aipswam_webhook_timeout', 10);
     add_option('aipswam_version', AIPSWAM_VERSION);
+
+    // Generate secure random endpoints
+    $random_endpoint = 'kw_' . bin2hex(random_bytes(8));
+    add_option('aipswam_random_endpoint', $random_endpoint);
+
+    $webhook_endpoint = 'wh_' . bin2hex(random_bytes(8));
+    add_option('aipswam_webhook_endpoint', $webhook_endpoint);
 
     // Set default capabilities
     $role = get_role('administrator');
@@ -232,7 +254,7 @@ function aipswam_deactivate() {
 function aipswam_set_keywords($post_id, $keywords) {
     global $aipswam_webhook_handler;
     if ($aipswam_webhook_handler) {
-        return $aipswam_webhook_handler->set_keywords_manually($post_id, $keywords);
+        return $aipswam_webhook_handler->set_keywords_from_webhook($post_id, $keywords);
     }
     return false;
 }
