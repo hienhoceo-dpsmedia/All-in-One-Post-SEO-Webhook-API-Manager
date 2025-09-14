@@ -1,0 +1,160 @@
+/* Admin Styles for AIPSWAM Plugin */
+.aipswam-admin-page {
+    max-width: 1200px;
+    margin: 20px 0;
+}
+
+.aipswam-tabs {
+    margin-top: 20px;
+}
+
+.aipswam-tabs .nav-tab-wrapper {
+    margin-bottom: 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.aipswam-tabs .nav-tab {
+    cursor: pointer;
+}
+
+.aipswam-tabs .tab-content {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    padding: 20px;
+}
+
+.aipswam-tabs .tab-pane {
+    display: none;
+}
+
+.aipswam-tabs .tab-pane.active {
+    display: block;
+}
+
+.aipswam-webhook-info {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.aipswam-code-block {
+    background: #f1f1f1;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+.aipswam-status-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.aipswam-status-success {
+    background-color: #46b450;
+}
+
+.aipswam-status-error {
+    background-color: #dc3232;
+}
+
+.aipswam-status-pending {
+    background-color: #ffb900;
+}
+
+.aipswam-manual-trigger {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.aipswam-manual-trigger select {
+    margin-right: 10px;
+    min-width: 300px;
+}
+
+.aipswam-test-result, .aipswam-trigger-result {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    display: none;
+}
+
+.aipswam-test-result.success, .aipswam-trigger-result.success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    display: block;
+}
+
+.aipswam-test-result.error, .aipswam-trigger-result.error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    display: block;
+}
+
+.aipswam-api-info {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+.aipswam-api-info h4 {
+    margin: 0 0 10px 0;
+    color: #495057;
+}
+
+.aipswam-api-info code {
+    background: #e9ecef;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+.aipswam-api-info ul {
+    margin: 10px 0 0 0;
+    padding-left: 20px;
+}
+
+.aipswam-about {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    line-height: 1.6;
+}
+
+.aipswam-about p {
+    margin: 0 0 10px 0;
+}
+
+.aipswam-about ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.aipswam-about strong {
+    color: #495057;
+}
+
+.aipswam-about a {
+    color: #0073aa;
+    text-decoration: none;
+}
+
+.aipswam-about a:hover {
+    text-decoration: underline;
+}
