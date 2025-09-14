@@ -28,14 +28,14 @@ define('AIPSWAM_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 // Include required files
 require_once AIPSWAM_PLUGIN_DIR . 'includes/class-aipswam-webhook-handler.php';
-require_once AIPSWAM_PLUGIN_DIR . 'includes/class-aipswam-admin.php';
-require_once AIPSWAM_PLUGIN_DIR . 'includes/class-aipswam-logger.php';
+require_once AIPSWAM_PLUGIN_DIR . 'includes/class-aipswam-enhanced-admin.php';
+require_once AIPSWAM_PLUGIN_DIR . 'includes/class-aipswam-simple-logger.php';
 
 // Initialize the plugin
 function aipswam_init_plugin() {
     new AIPSWAM_Webhook_Handler();
-    new AIPSWAM_Admin();
-    new AIPSWAM_Logger();
+    new AIPSWAM_Enhanced_Admin();
+    new AIPSWAM_Simple_Logger();
 }
 
 // Hook for plugin initialization
