@@ -79,7 +79,16 @@ class AIPSWAM_Working_Admin {
      */
     public function enqueue_admin_assets($hook) {
         if ($hook === 'settings_page_aipswam-settings') {
-            wp_enqueue_style('aipswam-admin', AIPSWAM_PLUGIN_URL . 'assets/css/admin.css', array(), AIPSWAM_VERSION);
+            wp_enqueue_style('aipswam-admin', AIPSWAM_PLUGIN_URL . 'assets/css/admin-modern.css', array(), AIPSWAM_VERSION);
+            // Add inline script to verify CSS loading
+            wp_add_inline_script('jquery', '
+                jQuery(document).ready(function($) {
+                    console.log("AIPSWAM: Admin CSS loaded");
+                    setTimeout(function() {
+                        console.log("AIPSWAM: Header background:", $(".aipswam-header").css("background-color"));
+                    }, 100);
+                });
+            ');
         }
     }
 
@@ -332,35 +341,39 @@ class AIPSWAM_Working_Admin {
                             <div class="aipswam-endpoints-list">
                                 <div class="aipswam-endpoint-item">
                                     <div class="aipswam-endpoint-header">
-                                        <h3><?php echo esc_html__('Get Keywords', 'all-in-one-post-seo-webhook-api-manager'); ?></h3>
+                                        <h3><?php echo esc_html__('🔐 Get All Posts with Keywords', 'all-in-one-post-seo-webhook-api-manager'); ?></h3>
                                         <span class="aipswam-method aipswam-method-get">GET</span>
                                     </div>
                                     <div class="aipswam-endpoint-url">
-                                        <code><?php echo esc_url(home_url('/wp-json/wp/v2/posts?_fields=id,title,yoast_focuskw,rankmath_focuskw,seo_keywords')); ?></code>
+                                        <code><?php echo esc_url(home_url('/wp-json/aipswam/' . get_option('aipswam_random_endpoint', 'kw_XXXXXXXX'))); ?></code>
                                         <button class="button button-secondary aipswam-copy-btn"
-                                                onclick="copyToClipboard('<?php echo esc_js(home_url('/wp-json/wp/v2/posts?_fields=id,title,yoast_focuskw,rankmath_focuskw,seo_keywords')); ?>')">
+                                                onclick="copyToClipboard('<?php echo esc_js(home_url('/wp-json/aipswam/' . get_option('aipswam_random_endpoint', 'kw_XXXXXXXX'))); ?>')">
                                             Copy
                                         </button>
                                     </div>
                                     <p class="aipswam-endpoint-description">
-                                        <?php echo esc_html__('Get all posts with their SEO keywords', 'all-in-one-post-seo-webhook-api-manager'); ?>
+                                        <?php echo esc_html__('Auto-detects SEO plugin and returns all posts with keywords', 'all-in-one-post-seo-webhook-api-manager'); ?>
+                                        <br><strong><?php echo esc_html__('🔐 Secured by random URL - only admin knows this endpoint', 'all-in-one-post-seo-webhook-api-manager'); ?></strong>
+                                        <br><code>curl -X GET "https://yoursite.com/wp-json/aipswam/<?php echo get_option('aipswam_random_endpoint', 'kw_XXXXXXXX'); ?>"</code>
                                     </p>
                                 </div>
 
                                 <div class="aipswam-endpoint-item">
                                     <div class="aipswam-endpoint-header">
-                                        <h3><?php echo esc_html__('Webhook Processing', 'all-in-one-post-seo-webhook-api-manager'); ?></h3>
+                                        <h3><?php echo esc_html__('🔐 Webhook Processing', 'all-in-one-post-seo-webhook-api-manager'); ?></h3>
                                         <span class="aipswam-method aipswam-method-post">POST</span>
                                     </div>
                                     <div class="aipswam-endpoint-url">
-                                        <code><?php echo esc_url(admin_url('admin-ajax.php?action=process_webhook_response')); ?></code>
+                                        <code><?php echo esc_url(home_url('/wp-json/aipswam/' . get_option('aipswam_webhook_endpoint', 'wh_XXXXXXXX'))); ?></code>
                                         <button class="button button-secondary aipswam-copy-btn"
-                                                onclick="copyToClipboard('<?php echo esc_js(admin_url('admin-ajax.php?action=process_webhook_response')); ?>')">
+                                                onclick="copyToClipboard('<?php echo esc_js(home_url('/wp-json/aipswam/' . get_option('aipswam_webhook_endpoint', 'wh_XXXXXXXX'))); ?>')">
                                             Copy
                                         </button>
                                     </div>
                                     <p class="aipswam-endpoint-description">
                                         <?php echo esc_html__('Process webhook responses containing keyword data', 'all-in-one-post-seo-webhook-api-manager'); ?>
+                                        <br><strong><?php echo esc_html__('🔐 Secured by random URL - only admin knows this endpoint', 'all-in-one-post-seo-webhook-api-manager'); ?></strong>
+                                        <br><code>curl -X POST "https://yoursite.com/wp-json/aipswam/<?php echo get_option('aipswam_webhook_endpoint', 'wh_XXXXXXXX'); ?>" -H "Content-Type: application/json" -d '{"post_id":123,"keywords":["keyword1","keyword2"]}'</code>
                                     </p>
                                 </div>
                             </div>
