@@ -63,6 +63,20 @@ function aipswam_register_rest_fields() {
             'schema' => null,
         ));
 
+        // Yoast focus keyword (single field)
+        register_rest_field($post_type, 'yoast_focuskw', array(
+            'get_callback' => 'aipswam_get_yoast_focuskw',
+            'update_callback' => null,
+            'schema' => null,
+        ));
+
+        // RankMath focus keyword (single field)
+        register_rest_field($post_type, 'rankmath_focuskw', array(
+            'get_callback' => 'aipswam_get_rankmath_focuskw',
+            'update_callback' => null,
+            'schema' => null,
+        ));
+
         // Combined keywords (based on active plugin)
         register_rest_field($post_type, 'seo_keywords', array(
             'get_callback' => 'aipswam_get_seo_keywords',
@@ -116,6 +130,32 @@ function aipswam_get_yoast_keywords($post_arr) {
         'primary' => $primary,
         'secondary' => is_array($secondary) ? $secondary : array()
     );
+}
+
+/**
+ * Get Yoast focus keyword for REST API
+ */
+function aipswam_get_yoast_focuskw($post_arr) {
+    $post_id = $post_arr['id'];
+
+    if (!defined('WPSEO_VERSION') && !class_exists('WPSEO_Meta')) {
+        return '';
+    }
+
+    return get_post_meta($post_id, '_yoast_wpseo_focuskw', true);
+}
+
+/**
+ * Get RankMath focus keyword for REST API
+ */
+function aipswam_get_rankmath_focuskw($post_arr) {
+    $post_id = $post_arr['id'];
+
+    if (!class_exists('RankMath') && !function_exists('rank_math')) {
+        return '';
+    }
+
+    return get_post_meta($post_id, 'rank_math_focus_keyword', true);
 }
 
 /**

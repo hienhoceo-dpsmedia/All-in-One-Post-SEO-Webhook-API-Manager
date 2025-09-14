@@ -12,7 +12,8 @@
       "Bash(unzip:*)",
       "WebFetch(domain:docs.github.com)",
       "Bash(gh release create:*)",
-      "Bash(php:*)"
+      "Bash(php:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
