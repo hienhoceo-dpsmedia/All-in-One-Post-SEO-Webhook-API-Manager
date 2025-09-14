@@ -123,7 +123,7 @@ function aipswam_get_yoast_keywords($post_arr) {
  */
 function aipswam_get_seo_keywords($post_arr) {
     $post_id = $post_arr['id'];
-    $seo_plugin = get_option('ppwr_seo_plugin', 'rankmath');
+    $seo_plugin = get_option('aipswam_seo_plugin', 'rankmath');
 
     switch ($seo_plugin) {
         case 'rankmath':
