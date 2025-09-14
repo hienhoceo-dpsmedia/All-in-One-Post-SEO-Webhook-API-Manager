@@ -51,16 +51,6 @@ class AIPSWAM_Webhook_Handler {
         // Add capability check
         add_filter('user_has_cap', array($this, 'check_webhook_capabilities'), 10, 3);
 
-        // Add REST API endpoints if enabled
-        if (get_option('aipswam_enable_rest_api', true)) {
-            add_action('rest_api_init', array($this, 'register_rest_routes'));
-        }
-
-        // Add manual trigger interface if enabled
-        if (get_option('aipswam_enable_manual_trigger', true)) {
-            add_action('admin_footer', array($this, 'add_manual_trigger_interface'));
-        }
-
         // Make instance globally available
         global $aipswam_webhook_handler;
         $aipswam_webhook_handler = $this;
@@ -73,6 +63,16 @@ class AIPSWAM_Webhook_Handler {
         $this->webhook_url = get_option('aipswam_webhook_url', '');
         $this->webhook_secret = get_option('aipswam_webhook_secret', wp_generate_password(32, false));
         $this->webhook_timeout = get_option('aipswam_webhook_timeout', 10);
+
+        // Add REST API endpoints if enabled
+        if (get_option('aipswam_enable_rest_api', true)) {
+            add_action('rest_api_init', array($this, 'register_rest_routes'));
+        }
+
+        // Add manual trigger interface if enabled
+        if (get_option('aipswam_enable_manual_trigger', true)) {
+            add_action('admin_footer', array($this, 'add_manual_trigger_interface'));
+        }
     }
 
     /**
