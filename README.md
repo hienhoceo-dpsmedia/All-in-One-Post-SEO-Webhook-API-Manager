@@ -1,59 +1,70 @@
-# All-in-One Post SEO Webhook & API Manager
+# 🚀 All-in-One Post SEO Webhook & API Manager
 
-Complete webhook management solution with SEO integration, API endpoints, and automation tools for WordPress posts.
+![WordPress](https://img.shields.io/badge/WordPress-5.0%2B-blue?logo=wordpress&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-7.2%2B-purple?logo=php&logoColor=white)
+![License](https://img.shields.io/badge/License-GPLv2-green)
+![Version](https://img.shields.io/badge/Version-2.0-orange)
 
-## Features
+A comprehensive webhook management solution with SEO integration, API endpoints, and automation tools for WordPress posts.
 
-- **Webhook Triggers**: Automatically send webhooks when post status changes
-- **SEO Integration**: Works with RankMath and Yoast SEO plugins
-- **REST API**: External API endpoints for keyword retrieval and webhook management
-- **Manual Trigger**: Admin interface for manual webhook sending
-- **Comprehensive Logging**: Track all webhook activities with automated cleanup
-- **Security**: HMAC signature verification and proper access controls
+## ✨ Features
 
-## Requirements
+| Feature | Description |
+|---------|-------------|
+| 🎣 **Webhook Triggers** | Automatically send webhooks when post status changes |
+| 🔍 **SEO Integration** | Works with RankMath and Yoast SEO plugins |
+| 🌐 **REST API** | External API endpoints for keyword retrieval and webhook management |
+| ⚡ **Manual Trigger** | Admin interface for manual webhook sending |
+| 📊 **Comprehensive Logging** | Track all webhook activities with automated cleanup |
+| 🔒 **Security** | HMAC signature verification and proper access controls |
 
-- WordPress 5.0 or higher
-- PHP 7.2 or higher
-- RankMath SEO or Yoast SEO plugin (optional but recommended)
+## 🛠️ Requirements
 
-## Installation
+- [x] **WordPress 5.0 or higher**
+- [x] **PHP 7.2 or higher**
+- [x] **RankMath SEO or Yoast SEO plugin** (optional but recommended)
 
-1. Download the plugin ZIP file
-2. Go to WordPress Admin → Plugins → Add New → Upload Plugin
-3. Select the ZIP file and install
-4. Activate the plugin
+## 📦 Installation
 
-## Configuration
+1. 📥 Download the plugin ZIP file from the [latest release](../../releases/latest)
+2. 🧭 Go to **WordPress Admin → Plugins → Add New → Upload Plugin**
+3. 📁 Select the ZIP file and install
+4. ✅ Activate the plugin
 
-1. Go to Settings → SEO Webhook API
-2. Configure your webhook URL and optional secret key
-3. Select which post types should trigger webhooks
-4. Choose your preferred SEO plugin integration
-5. Test your webhook connection
+## ⚙️ Configuration
 
-## API Endpoints
+1. 🔧 Go to **Settings → SEO Webhook API**
+2. 🔗 Configure your webhook URL and optional secret key
+3. 📝 Select which post types should trigger webhooks
+4. 🎯 Choose your preferred SEO plugin integration
+5. 🧪 Test your webhook connection
+
+## 🔌 API Endpoints
 
 ### REST API (when enabled)
 
-- `GET /wp-json/aipswam/v1/keywords/{post_id}` - Get SEO keywords for a post
-- `POST /wp-json/aipswam/v1/webhooks/trigger/{post_id}` - Trigger webhook for a post
-- `GET /wp-json/aipswam/v1/logs` - Get webhook logs
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/wp-json/aipswam/v1/keywords/{post_id}` | Get SEO keywords for a post |
+| `POST` | `/wp-json/aipswam/v1/webhooks/trigger/{post_id}` | Trigger webhook for a post |
+| `GET` | `/wp-json/aipswam/v1/logs` | Get webhook logs |
 
 ### Webhook Processing
 
-- `POST /wp-admin/admin-ajax.php?action=process_webhook_response` - Process webhook responses with keyword data
+```
+POST /wp-admin/admin-ajax.php?action=process_webhook_response
+```
 
-## Security Features
+## 🔒 Security Features
 
-- Input sanitization and validation
-- CSRF protection with nonces
-- Proper capability checks
-- SQL injection prevention
-- Webhook signature verification
-- XSS protection throughout
+- ✅ **Input sanitization and validation**
+- ✅ **CSRF protection with nonces**
+- ✅ **Proper capability checks**
+- ✅ **SQL injection prevention**
+- ✅ **Webhook signature verification**
+- ✅ **XSS protection throughout**
 
-## Webhook Payload Format
+## 📋 Webhook Payload Format
 
 ```json
 {
@@ -74,39 +85,63 @@ Complete webhook management solution with SEO integration, API endpoints, and au
 }
 ```
 
-## Response Processing
+## 🔄 Response Processing
 
 The plugin can process webhook responses containing keyword data:
 
 ```json
 {
   "post_id": 123,
-  "keywords": ["primary keyword", "secondary keyword 1", "secondary keyword 2"]
+  "keywords": [
+    "primary keyword",
+    "secondary keyword 1",
+    "secondary keyword 2"
+  ]
 }
 ```
 
-## Development
+## 🚀 Development
 
 This plugin follows WordPress coding standards and includes:
 
-- Proper security measures
-- Database optimization with caching
-- Comprehensive error handling
-- Multilingual support ready
+- 🛡️ **Proper security measures**
+- ⚡ **Database optimization with caching**
+- 🐛 **Comprehensive error handling**
+- 🌍 **Multilingual support ready**
 
-## Support
+## 💬 Support
 
-For support and feature requests, please use the GitHub issues section.
+For support and feature requests, please use the [GitHub issues](../../issues) section.
 
-## License
+## 📜 License
 
 GPLv2 or later - see [LICENSE.txt](LICENSE.txt) for details.
 
-## About DPS.MEDIA JSC
+## 🏢 About DPS.MEDIA JSC
 
-Since 2017, DPS.MEDIA JSC has been a leading provider of digital marketing and AI automation solutions. With a focus on comprehensive digital transformation, we have served over 5,400 SME customers, helping them leverage cutting-edge technology for business growth.
+Since 2017, **DPS.MEDIA JSC** has been a leading provider of digital marketing and AI automation solutions. With a focus on comprehensive digital transformation, we have served over **5,400 SME customers**, helping them leverage cutting-edge technology for business growth.
 
-**Contact Information:**
-- 📍 56 Nguyễn Đình Chiểu, Phường Tân Định, Thành phố Hồ Chí Minh, Việt Nam
-- 📞 0961545445
-- 🌐 https://dps.media/
+### Our Expertise
+- Digital Marketing Strategy & Implementation
+- AI & Automation Solutions
+- Enterprise Workflow Integration
+- Content Creation & Management
+- E-commerce Optimization
+
+### Why Choose Us
+- ✅ 7+ years industry experience
+- ✅ 5,400+ satisfied customers
+- ✅ Expert team of digital specialists
+- ✅ Cutting-edge technology solutions
+- ✅ Results-driven approach
+
+### 📞 Contact Information
+- 📍 **56 Nguyễn Đình Chiểu, Phường Tân Định, Thành phố Hồ Chí Minh, Việt Nam**
+- 📞 **0961545445**
+- 🌐 **[https://dps.media/](https://dps.media/)**
+
+---
+
+<p align="center">
+  <b>Made with ❤️ by <a href="https://dps.media/">DPS.MEDIA JSC</a></b>
+</p>
