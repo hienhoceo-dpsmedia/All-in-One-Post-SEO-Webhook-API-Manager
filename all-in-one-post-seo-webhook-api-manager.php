@@ -3,7 +3,7 @@
  * Plugin Name: All-in-One Post SEO Webhook & API Manager
  * Plugin URI: https://wordpress.org/plugins/all-in-one-post-seo-webhook-api-manager/
  * Description: Complete webhook management solution with SEO integration, API endpoints, and automation tools for WordPress posts
- * Version: 2.2.8
+ * Version: 2.2.9
  * Requires at least: 5.0
  * Tested up to: 6.4
  * Requires PHP: 7.2
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('AIPSWAM_VERSION', '2.2.8');
+define('AIPSWAM_VERSION', '2.2.9');
 define('AIPSWAM_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AIPSWAM_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('AIPSWAM_PLUGIN_BASENAME', plugin_basename(__FILE__));
