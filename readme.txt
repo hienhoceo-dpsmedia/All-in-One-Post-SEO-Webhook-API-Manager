@@ -3,7 +3,7 @@ Contributors: dpsmediajsc
 Tags: webhook, seo, rankmath, yoast, api, automation, post, integration
 Requires at least: 5.0
 Tested up to: 6.4
-Stable tag: 2.0
+Stable tag: 2.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,16 @@ Yes! The plugin includes a manual trigger interface in the Tools tab where you c
 5. Webhook testing and manual trigger tools
 
 == Changelog ==
+
+= 2.3.0 =
+* Fixed webhook trigger logic for pending to publish transitions
+* Removed webhook secret feature for simplified configuration
+* Improved settings saving logic across admin tabs
+* Fixed JSON response issues in admin interface
+* Enhanced debugging capabilities for webhook troubleshooting
+* Optimized REST endpoint registration to prevent conflicts
+* Removed duplicate webhook hooks to prevent race conditions
+* Added comprehensive error logging for better diagnostics
 
 = 2.0 =
 * Complete rebranding to All-in-One Post SEO Webhook & API Manager

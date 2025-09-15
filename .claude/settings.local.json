@@ -15,7 +15,12 @@
       "Bash(php:*)",
       "Bash(curl:*)",
       "Bash(gh release upload:*)",
-      "Bash(zip:*)"
+      "Bash(zip:*)",
+      "Read(//c/Users/Admin/AppData/Roaming/Code/User/**)",
+      "Bash(git tag:*)",
+      "Bash(gh release view:*)",
+      "Bash(gh release edit:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []

@@ -3,7 +3,7 @@
  * Plugin Name: All-in-One Post SEO Webhook & API Manager
  * Plugin URI: https://wordpress.org/plugins/all-in-one-post-seo-webhook-api-manager/
  * Description: Complete webhook management solution with SEO integration, API endpoints, and automation tools for WordPress posts
- * Version: 2.2.9
+ * Version: 2.3.0
  * Requires at least: 5.0
  * Tested up to: 6.4
  * Requires PHP: 7.2
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('AIPSWAM_VERSION', '2.2.9');
+define('AIPSWAM_VERSION', '2.3.0');
 define('AIPSWAM_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AIPSWAM_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('AIPSWAM_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -219,7 +219,6 @@ register_activation_hook(__FILE__, 'aipswam_activate');
 function aipswam_activate() {
     // Create default options
     add_option('aipswam_webhook_url', '');
-    add_option('aipswam_webhook_secret', wp_generate_password(32, false));
     add_option('aipswam_seo_plugin', 'rankmath');
     add_option('aipswam_enabled_post_types', array('post'));
     add_option('aipswam_trigger_statuses', array('pending', 'publish'));

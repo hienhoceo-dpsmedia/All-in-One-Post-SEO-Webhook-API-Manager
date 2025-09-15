@@ -17,12 +17,7 @@ class AIPSWAM_Secure_Webhook_Handler {
      */
     private $webhook_url;
 
-    /**
-     * Webhook secret
-     * @var string
-     */
-    private $webhook_secret;
-
+    
     /**
      * Cache key prefix
      * @var string
@@ -41,7 +36,6 @@ class AIPSWAM_Secure_Webhook_Handler {
     public function __construct() {
         add_action('init', array($this, 'init'));
         add_action('transition_post_status', array($this, 'handle_post_status_change'), 10, 3);
-        add_action('publish_post', array($this, 'handle_new_published_post'), 10, 2);
 
         // MORE SECURE: Only allow authenticated admin requests
         add_action('wp_ajax_process_webhook_response', array($this, 'process_webhook_response'));
@@ -66,7 +60,6 @@ class AIPSWAM_Secure_Webhook_Handler {
      */
     public function init() {
         $this->webhook_url = get_option('aipswam_webhook_url', '');
-        $this->webhook_secret = get_option('aipswam_webhook_secret', wp_generate_password(32, false));
         $this->webhook_timeout = get_option('aipswam_webhook_timeout', 10);
 
         // Initialize random endpoint if not exists
@@ -101,19 +94,28 @@ class AIPSWAM_Secure_Webhook_Handler {
         $enabled_post_types = get_option('aipswam_enabled_post_types', array('post'));
         $trigger_statuses = get_option('aipswam_trigger_statuses', array('pending', 'publish'));
 
+        // Debug logging
+        error_log(sprintf('AIPSWAM Debug: Post ID %d, Type: %s, Status: %s → %s',
+            $post->ID, $post->post_type, $old_status, $new_status));
+        error_log(sprintf('AIPSWAM Debug: Enabled types: %s, Trigger statuses: %s',
+            implode(', ', $enabled_post_types), implode(', ', $trigger_statuses)));
+
         // Check if this post type is enabled
         if (!in_array($post->post_type, $enabled_post_types)) {
             return;
         }
 
         // Check if this status change should trigger a webhook
-        if (!in_array($new_status, $trigger_statuses)) {
+        // Trigger if either old status or new status is in trigger statuses
+        if (!in_array($old_status, $trigger_statuses) && !in_array($new_status, $trigger_statuses)) {
+            error_log(sprintf('Webhook NOT triggered for post ID %d: %s → %s (Trigger statuses: %s)',
+                $post->ID, $old_status, $new_status, implode(', ', $trigger_statuses)));
             return;
         }
 
         // Log the transition for debugging
         error_log(sprintf('Post ID %d: Status changed from "%s" to "%s"', $post->ID, $old_status, $new_status));
-        error_log(sprintf('Sending webhook for post ID %d - Status: %s', $post->ID, strtoupper($new_status)));
+        error_log(sprintf('Sending webhook for post ID %d - Trigger: %s → %s', $post->ID, $old_status, $new_status));
 
         $this->send_to_webhook($post);
     }
@@ -381,13 +383,7 @@ class AIPSWAM_Secure_Webhook_Handler {
             'User-Agent' => 'AIPSWAM-Webhook/' . AIPSWAM_VERSION
         );
 
-        // Add signature if secret is configured
-        if (!empty($this->webhook_secret)) {
-            $payload = json_encode($data);
-            $signature = hash_hmac('sha256', $payload, $this->webhook_secret);
-            $headers['X-Webhook-Signature'] = 'sha256=' . $signature;
-        }
-
+        
         return $headers;
     }
 
@@ -760,7 +756,6 @@ class AIPSWAM_Secure_Webhook_Handler {
         }
 
         $webhook_url = sanitize_text_field($_POST['webhook_url']);
-        $webhook_secret = sanitize_text_field($_POST['webhook_secret']);
 
         if (empty($webhook_url)) {
             wp_send_json_error(array('message' => __('Webhook URL is required', 'all-in-one-post-seo-webhook-api-manager')));
@@ -778,11 +773,7 @@ class AIPSWAM_Secure_Webhook_Handler {
             'User-Agent' => 'AIPSWAM-Test/' . AIPSWAM_VERSION
         );
 
-        if (!empty($webhook_secret)) {
-            $signature = hash_hmac('sha256', json_encode($test_data), $webhook_secret);
-            $headers['X-Webhook-Signature'] = 'sha256=' . $signature;
-        }
-
+        
         $args = array(
             'method' => 'POST',
             'timeout' => 15,

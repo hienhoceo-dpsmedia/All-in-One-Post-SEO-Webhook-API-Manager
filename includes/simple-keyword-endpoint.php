@@ -4,7 +4,9 @@
  * This replaces the complex function that's causing 500 errors
  */
 
-function aipswam_simple_get_keywords($request) {
+// Only register endpoint if not already registered
+if (!function_exists('aipswam_simple_get_keywords')) {
+    function aipswam_simple_get_keywords($request) {
     // Get all published posts
     $args = array(
         'post_type' => 'post',
@@ -49,12 +51,19 @@ function aipswam_simple_get_keywords($request) {
 
     wp_reset_postdata();
     return new WP_REST_Response($keywords_data);
+  }
 }
 
 // Register the simple endpoint
 add_action('rest_api_init', function () {
-    $random_endpoint = get_option('aipswam_random_endpoint', 'kw_' . bin2hex(random_bytes(8)));
-    register_rest_route('aipswam', $random_endpoint, array(
+    // Get existing endpoint or create new one
+    $random_endpoint = get_option('aipswam_random_endpoint');
+    if (empty($random_endpoint)) {
+        $random_endpoint = 'kw_' . bin2hex(random_bytes(8));
+        update_option('aipswam_random_endpoint', $random_endpoint);
+    }
+
+    register_rest_route('aipswam', '/' . $random_endpoint, array(
         'methods' => 'GET',
         'callback' => 'aipswam_simple_get_keywords',
         'permission_callback' => '__return_true'

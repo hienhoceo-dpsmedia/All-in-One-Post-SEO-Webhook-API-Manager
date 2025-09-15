@@ -43,12 +43,7 @@ class AIPSWAM_Working_Admin {
             'default' => '',
         ));
 
-        register_setting('aipswam_settings', 'aipswam_webhook_secret', array(
-            'type' => 'string',
-            'sanitize_callback' => 'sanitize_text_field',
-            'default' => '',
-        ));
-
+        
         register_setting('aipswam_settings', 'aipswam_seo_plugin', array(
             'type' => 'string',
             'sanitize_callback' => 'sanitize_text_field',
@@ -96,24 +91,32 @@ class AIPSWAM_Working_Admin {
      * Sanitize post types array
      */
     public function sanitize_post_types_array($value) {
-        if (!is_array($value)) {
+        // Handle empty array (no checkboxes selected)
+        if (!is_array($value) || empty($value)) {
             return array('post');
         }
 
         $valid_post_types = get_post_types(array('public' => true));
-        return array_intersect($value, array_keys($valid_post_types));
+        $filtered = array_intersect($value, array_keys($valid_post_types));
+
+        // If no valid post types, return default
+        return empty($filtered) ? array('post') : $filtered;
     }
 
     /**
      * Sanitize statuses array
      */
     public function sanitize_statuses_array($value) {
-        if (!is_array($value)) {
+        // Handle empty array (no checkboxes selected)
+        if (!is_array($value) || empty($value)) {
             return array('pending', 'publish');
         }
 
         $valid_statuses = array_keys(get_post_statuses());
-        return array_intersect($value, $valid_statuses);
+        $filtered = array_intersect($value, $valid_statuses);
+
+        // If no valid statuses, return default
+        return empty($filtered) ? array('pending', 'publish') : $filtered;
     }
 
     /**
@@ -178,6 +181,18 @@ class AIPSWAM_Working_Admin {
                             <h2><?php echo esc_html__('Basic Configuration', 'all-in-one-post-seo-webhook-api-manager'); ?></h2>
                             <form method="post" action="options.php">
                                 <?php settings_fields('aipswam_settings'); ?>
+                                <!-- Hidden fields to preserve all settings when saving -->
+                                <?php
+                                // Hidden fields for trigger settings
+                                $hidden_fields = '';
+                                foreach ($enabled_post_types as $post_type) {
+                                    $hidden_fields .= '<input type="hidden" name="aipswam_enabled_post_types[]" value="' . esc_attr($post_type) . '">';
+                                }
+                                foreach ($trigger_statuses as $status) {
+                                    $hidden_fields .= '<input type="hidden" name="aipswam_trigger_statuses[]" value="' . esc_attr($status) . '">';
+                                }
+                                echo $hidden_fields;
+                                ?>
                                 <table class="form-table" role="presentation">
                                     <tr>
                                         <th scope="row">
@@ -199,26 +214,6 @@ class AIPSWAM_Working_Admin {
                                                     <?php echo esc_html__('Webhook URL is configured', 'all-in-one-post-seo-webhook-api-manager'); ?>
                                                 </div>
                                             <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <label for="aipswam_webhook_secret">
-                                                <span class="dashicons dashicons-lock"></span>
-                                                <?php echo esc_html__('Webhook Secret', 'all-in-one-post-seo-webhook-api-manager'); ?>
-                                            </label>
-                                        </th>
-                                        <td>
-                                            <input type="text" id="aipswam_webhook_secret" name="aipswam_webhook_secret"
-                                                   value="<?php echo esc_attr(get_option('aipswam_webhook_secret', '')); ?>"
-                                                   class="regular-text" />
-                                            <p class="description">
-                                                <?php echo esc_html__('Optional: Secret key for webhook authentication (HMAC-SHA256)', 'all-in-one-post-seo-webhook-api-manager'); ?>
-                                            </p>
-                                            <button type="button" class="button button-secondary" onclick="generateSecret()">
-                                                <span class="dashicons dashicons-refresh"></span>
-                                                <?php echo esc_html__('Generate New Secret', 'all-in-one-post-seo-webhook-api-manager'); ?>
-                                            </button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -273,6 +268,10 @@ class AIPSWAM_Working_Admin {
                             <h2><?php echo esc_html__('Trigger Configuration', 'all-in-one-post-seo-webhook-api-manager'); ?></h2>
                             <form method="post" action="options.php">
                                 <?php settings_fields('aipswam_settings'); ?>
+                                <!-- Hidden fields to preserve all settings when saving -->
+                                <input type="hidden" name="aipswam_webhook_url" value="<?php echo esc_attr($webhook_url); ?>">
+                                <input type="hidden" name="aipswam_seo_plugin" value="<?php echo esc_attr($seo_plugin); ?>">
+                                <input type="hidden" name="aipswam_webhook_timeout" value="<?php echo esc_attr($webhook_timeout); ?>">
                                 <table class="form-table" role="presentation">
                                     <tr>
                                         <th scope="row">
@@ -485,15 +484,7 @@ class AIPSWAM_Working_Admin {
                     document.body.removeChild(textArea);
                 }
 
-                // Generate secret functionality
-                function generateSecret() {
-                    var secret = Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2);
-                    var secretField = document.getElementById('aipswam_webhook_secret');
-                    if (secretField) {
-                        secretField.value = secret;
-                    }
-                }
-
+                
                 // Initialize - show first tab by default
                 document.addEventListener('DOMContentLoaded', function() {
                     showTab('general', document.querySelector('.nav-tab'));
